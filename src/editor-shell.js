@@ -257,6 +257,38 @@
     return (e.key || '').toLowerCase() === key;
   }
 
+  // ---------- Toast ----------
+  function ensureToastHost() {
+    var host = document.getElementById('es-toast-host');
+    if (host) return host;
+    host = el('div', { class: 'es-toast-host', id: 'es-toast-host' });
+    document.body.appendChild(host);
+    return host;
+  }
+
+  function showToast(msg, type, opts) {
+    var host = ensureToastHost();
+    var t = el('div', { class: 'es-toast es-toast-' + (type || 'info') });
+    t.textContent = String(msg || '');
+    host.appendChild(t);
+    // force reflow so transition runs
+    /* eslint-disable no-unused-expressions */ t.offsetHeight; /* eslint-enable */
+    t.classList.add('is-on');
+    var dur = (opts && opts.duration) || (type === 'error' ? 2600 : 1500);
+    setTimeout(function () {
+      t.classList.remove('is-on');
+      setTimeout(function () { if (t.parentNode) t.parentNode.removeChild(t); }, 250);
+    }, dur);
+  }
+
+  // ---------- beforeunload guard ----------
+  function onBeforeUnload(e) {
+    if (!state.dirty) return;
+    e.preventDefault();
+    e.returnValue = 'You have unsaved changes. Leave anyway?';
+    return e.returnValue;
+  }
+
   // ---------- public API ----------
   var EditorShell = {
     mount: function (opts) {
@@ -287,9 +319,11 @@
 
       if (!state.mounted) {
         window.addEventListener('keydown', onKeydown);
+        window.addEventListener('beforeunload', onBeforeUnload);
         state.mounted = true;
       }
       ensureHelpOverlay();
+      ensureToastHost();
       return EditorShell;
     },
     markDirty: function () {
@@ -300,6 +334,7 @@
       state.dirty = false;
       if (state.dirtyEl) state.dirtyEl.classList.remove('is-on');
     },
+    toast: function (msg, type, opts) { showToast(msg, type, opts); },
     isDirty: function () { return !!state.dirty; },
     bindShortcut: function (combo, fn) {
       if (typeof combo !== 'string' || typeof fn !== 'function') return;

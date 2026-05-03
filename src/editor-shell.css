@@ -158,6 +158,48 @@
 }
 .es-subtitle-row.is-on { display: block; }
 
+/* ---- Toast (EditorShell.toast) ---- */
+.es-toast-host {
+  position: fixed;
+  left: 50%; bottom: 24px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  z-index: 100000;
+  pointer-events: none;
+}
+.es-toast {
+  pointer-events: auto;
+  padding: 9px 16px;
+  border-radius: 8px;
+  font: 700 12px Fredoka, sans-serif;
+  letter-spacing: 0.3px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: rgba(36, 40, 52, 0.96);
+  color: #f1f3f8;
+  border: 1px solid rgba(255,255,255,0.12);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+.es-toast.is-on { opacity: 1; transform: translateY(0); }
+.es-toast.es-toast-success {
+  background: linear-gradient(180deg, #2f7d4e, #226b40);
+  border-color: rgba(120,210,150,0.45);
+  color: #f4fff5;
+}
+.es-toast.es-toast-error {
+  background: linear-gradient(180deg, #a13a3a, #862c2c);
+  border-color: rgba(255,140,140,0.45);
+  color: #fff3f3;
+}
+.es-toast.es-toast-info {
+  background: rgba(36, 40, 52, 0.96);
+  color: #f1f3f8;
+}
+
 /* ---- Help overlay (toggled with `?`) ---- */
 .es-help-overlay {
   position: fixed; inset: 0;
