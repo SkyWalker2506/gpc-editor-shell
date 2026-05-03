@@ -245,3 +245,19 @@
   color: var(--es-hint);
   text-align: center;
 }
+
+/* ---------- Cross-editor empty state ----------
+ * Canonical .empty-pane — supersedes the per-editor <style> blocks so
+ * lists/panes look identical across Level / Courses / UI / Assets / Library.
+ * `body` prefix raises specificity above the page-local `.empty-pane`
+ * declarations (which load before this file in <head>) without forcing
+ * !important. */
+body .empty-pane {
+  color: var(--es-hint, var(--ink-dim, #92a0b6));
+  font-size: 12px;
+  padding: 20px 12px;
+  font-style: italic;
+  text-align: center;
+  line-height: 1.45;
+}
+body .empty-pane b { color: var(--es-text, #e7eaf3); font-weight: 700; font-style: normal; }
