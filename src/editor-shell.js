@@ -76,11 +76,20 @@
   }
 
   function buildTopbar(opts) {
+    // `brand` may be a string (legacy: subtitle text) or an object
+    // { logo, name, accent }. Object form takes precedence; loose props
+    // (`opts.logo`) still work for backward compatibility.
+    var brandObj = (opts.brand && typeof opts.brand === 'object') ? opts.brand : {};
+    var brandText = (typeof opts.brand === 'string') ? opts.brand : (brandObj.name || 'Golf · Paper Craft');
+    var logoText  = brandObj.logo || opts.logo || '⛳';
+    if (brandObj.accent) {
+      try { document.documentElement.style.setProperty('--es-accent', brandObj.accent); } catch (_) {}
+    }
     var brand = el('div', { class: 'es-brand' }, [
-      el('span', { class: 'es-logo', text: opts.logo || '⛳' }),
+      el('span', { class: 'es-logo', text: logoText }),
       el('div', { class: 'es-titles' }, [
         el('div', { class: 'es-title', text: opts.title || 'Editor' }),
-        el('div', { class: 'es-subtitle', text: opts.brand || 'Golf · Paper Craft' })
+        el('div', { class: 'es-subtitle', text: brandText })
       ])
     ]);
 

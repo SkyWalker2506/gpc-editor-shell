@@ -29,8 +29,9 @@ Then in the page's init script:
 EditorShell.mount({
   page: 'level',                    // current tab key
   title: 'Level Editor',
-  brand: 'My Game',                 // subtitle (defaults to "Golf · Paper Craft")
-  logo:  '🎮',                      // single-char logo (defaults to ⛳)
+  // brand: 'My Game',              // (legacy: string subtitle)
+  brand: { name: 'My Game', logo: '🎮', accent: '#5cf2a3' }, // object form (preferred)
+  logo:  '🎮',                      // top-level shortcut, equivalent to brand.logo
   tabs: [                           // optional — overrides default 5-tab nav
     { page: 'level',  label: 'Levels', icon: '🌱', href: './editor.html' },
     { page: 'assets', label: 'Assets', icon: '📦', href: './assets.html' },
@@ -51,9 +52,13 @@ EditorShell.mount({
 - `EditorShell.setSubtitle(text)` — update the subtitle dynamically.
 - `EditorShell.addShortcut({ key, ctrl?, shift?, alt?, run })` — register an extra keybinding.
 
+## Examples
+
+- `examples/standalone.html` — a fully custom topbar (tabs, brand, accent) for a non-golf project. Open via `python3 -m http.server -d examples 8080`.
+
 ## Status
 
-Initial extract from golf-paper-craft @ 2026-05-03. Default tabs/brand still reference the golf project as fallback when no opts are passed; pass `tabs`/`brand`/`logo` to retheme.
+Initial extract from golf-paper-craft @ 2026-05-03. Default tabs/brand still reference the golf project as fallback when no opts are passed; pass `tabs`/`brand`/`logo` to retheme. See `CHANGELOG.md`.
 
 ## License
 

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EditorShell — Standalone Example</title>
+<link rel="stylesheet" href="../src/editor-shell.css" />
+<style>
+  body { margin: 0; font: 14px system-ui, sans-serif; color: var(--es-text); background: var(--es-bg-deep); }
+  .body { padding: 24px; max-width: 720px; }
+  h1 { margin-top: 0; }
+  pre { background: rgba(255,255,255,0.06); padding: 12px; border-radius: 8px; overflow-x: auto; font-size: 12px; }
+  button { font: inherit; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--es-border-strong); background: var(--es-bg-soft); color: var(--es-text); cursor: pointer; }
+  .log { font: 12px ui-monospace, monospace; background: #000; color: #5cf2a3; padding: 8px; border-radius: 6px; min-height: 80px; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<div id="editor-shell-topbar"></div>
+
+<div class="body">
+  <h1>EditorShell — Standalone</h1>
+  <p>Demonstrates a fully custom topbar (tabs, brand, accent) for a non-golf project.</p>
+
+  <pre>EditorShell.mount({
+  page: 'maps',
+  title: 'Map Editor',
+  brand: { name: 'My Roguelike Toolkit', logo: '🗺️', accent: '#5cf2a3' },
+  tabs: [
+    { page: 'maps',    label: 'Maps',    icon: '🗺️', href: '#maps' },
+    { page: 'enemies', label: 'Enemies', icon: '👹', href: '#enemies' },
+    { page: 'loot',    label: 'Loot',    icon: '💎', href: '#loot' },
+  ],
+  actions: {
+    onSave:    () => log('SAVE'),
+    onPublish: () => log('PUBLISH'),
+    onUndo:    () => log('UNDO'),
+  }
+});</pre>
+
+  <p><button id="dirty">Toggle dirty</button> <button id="sub">Random subtitle</button></p>
+  <div class="log" id="log">Try the topbar buttons above. Press <code>?</code> for shortcuts help.</div>
+</div>
+
+<script src="../src/editor-shell.js"></script>
+<script>
+  const logEl = document.getElementById('log');
+  function log(msg) { logEl.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg + '\n' + logEl.textContent; }
+
+  EditorShell.mount({
+    page: 'maps',
+    title: 'Map Editor',
+    brand: { name: 'My Roguelike Toolkit', logo: '🗺️', accent: '#5cf2a3' },
+    tabs: [
+      { page: 'maps',    label: 'Maps',    icon: '🗺️', href: '#maps' },
+      { page: 'enemies', label: 'Enemies', icon: '👹', href: '#enemies' },
+      { page: 'loot',    label: 'Loot',    icon: '💎', href: '#loot' },
+    ],
+    actions: {
+      onSave:    () => log('SAVE'),
+      onPublish: () => log('PUBLISH'),
+      onUndo:    () => log('UNDO'),
+      onRedo:    () => log('REDO'),
+    }
+  });
+
+  let dirty = false;
+  document.getElementById('dirty').onclick = () => {
+    dirty = !dirty;
+    if (dirty) EditorShell.markDirty(); else EditorShell.markClean();
+    log('dirty=' + dirty);
+  };
+  document.getElementById('sub').onclick = () => {
+    EditorShell.setSubtitle('Updated @ ' + Date.now());
+  };
+</script>
+</body>
+</html>
