@@ -1,0 +1,205 @@
+/* ===========================================================
+   Editor Shell — shared dark theme + topbar across all editors
+   Used by: editor.html, course-editor.html, ui-editor.html,
+            asset-editor.html, assets-library.html
+   =========================================================== */
+
+:root {
+  /* Shared dark theme tokens — purple paper-craft accent */
+  --es-bg-deep:     #14101e;
+  --es-bg:          #1d1830;
+  --es-bg-soft:     #271f3e;
+  --es-bg-hi:       #352a52;
+  --es-border:      rgba(255,255,255,0.10);
+  --es-border-strong: rgba(255,255,255,0.20);
+  --es-text:        #ece6ff;
+  --es-hint:        #9b8fc2;
+  --es-accent:      #b48cff;
+  --es-accent-strong: #8a5cff;
+  --es-accent-soft: rgba(180,140,255,0.16);
+  --es-danger:      #ef6a6a;
+  --es-success:     #5cf2a3;
+  --es-warn:        #ffb347;
+}
+
+#editor-shell-topbar { display: block; }
+
+/* Legacy in-page topbars get auto-hidden once the shell mounts.
+   Their DOM (and #btn-* IDs) stay alive so existing handlers still attach
+   and the shell's buttons can forward clicks to them. */
+.es-legacy-hidden {
+  position: absolute !important;
+  width: 1px !important; height: 1px !important;
+  padding: 0 !important; margin: -1px !important;
+  overflow: hidden !important; clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important; border: 0 !important;
+  pointer-events: none !important;
+}
+
+.es-topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px;
+  background: var(--es-bg);
+  border-bottom: 1px solid var(--es-border);
+  min-height: 48px;
+  font: 600 12px Fredoka, sans-serif;
+  color: var(--es-text);
+  flex-wrap: wrap;
+}
+.es-brand {
+  display: flex; align-items: center; gap: 10px;
+  padding-right: 10px;
+  border-right: 1px solid var(--es-border);
+}
+.es-logo {
+  width: 28px; height: 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--es-accent-soft);
+  border: 1px solid var(--es-accent-strong);
+  color: var(--es-accent);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 800;
+}
+.es-titles { display: flex; flex-direction: column; line-height: 1.1; }
+.es-title { font: 800 14px Fredoka, sans-serif; letter-spacing: 0.3px; color: var(--es-text); }
+.es-subtitle { font-size: 10.5px; color: var(--es-hint); margin-top: 2px; }
+
+.es-tabs {
+  display: flex; gap: 4px;
+  background: var(--es-bg-deep);
+  padding: 3px;
+  border-radius: 8px;
+  border: 1px solid var(--es-border);
+}
+.es-tab {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 11px;
+  border-radius: 6px;
+  font: 700 12px Fredoka, sans-serif;
+  color: var(--es-hint);
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background .12s, color .12s, border-color .12s;
+}
+.es-tab:hover { color: var(--es-text); background: var(--es-bg-soft); }
+.es-tab.is-current {
+  background: var(--es-accent-soft);
+  border-color: var(--es-accent-strong);
+  color: var(--es-accent);
+}
+
+.es-grow { flex: 1 1 auto; }
+
+.es-actions { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.es-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font: 700 12px Fredoka, sans-serif;
+  color: var(--es-text);
+  background: var(--es-bg-soft);
+  border: 1px solid var(--es-border-strong);
+  padding: 7px 12px;
+  border-radius: 7px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .12s, transform .06s;
+}
+.es-btn:hover { background: var(--es-bg-hi); }
+.es-btn:active { transform: translateY(1px); }
+.es-btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+.es-btn.es-primary {
+  background: var(--es-accent);
+  color: #14101e;
+  border-color: var(--es-accent-strong);
+  font-weight: 800;
+}
+.es-btn.es-primary:hover { background: var(--es-accent-strong); color: #fff; }
+.es-btn.es-success {
+  background: var(--es-success);
+  color: #0c1f15;
+  border-color: rgba(0,0,0,0.25);
+  font-weight: 800;
+}
+.es-btn.es-danger {
+  border-color: rgba(239,106,106,0.45);
+  color: #ffb1b1;
+}
+.es-btn.es-danger:hover { background: rgba(239,106,106,0.18); }
+.es-btn.es-icon { padding: 6px 9px; font-size: 13px; }
+
+.es-dirty {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 9px;
+  font: 700 11px Fredoka, sans-serif;
+  color: var(--es-warn);
+  background: rgba(255,179,71,0.10);
+  border: 1px solid rgba(255,179,71,0.32);
+  border-radius: 999px;
+  visibility: hidden;
+}
+.es-dirty.is-on { visibility: visible; }
+.es-dirty .es-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--es-warn);
+  box-shadow: 0 0 6px rgba(255,179,71,0.6);
+}
+
+.es-subtitle-row {
+  display: none;
+  padding: 6px 16px;
+  font-size: 11.5px;
+  color: var(--es-hint);
+  background: var(--es-bg-deep);
+  border-bottom: 1px solid var(--es-border);
+}
+.es-subtitle-row.is-on { display: block; }
+
+/* ---- Help overlay (toggled with `?`) ---- */
+.es-help-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15, 10, 25, 0.78);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center; justify-content: center;
+  z-index: 99999;
+}
+.es-help-overlay.is-on { display: flex; }
+.es-help-card {
+  background: var(--es-bg);
+  color: var(--es-text);
+  border: 1px solid var(--es-border-strong);
+  border-radius: 14px;
+  padding: 22px 26px;
+  width: min(440px, 92vw);
+  box-shadow: 0 18px 60px rgba(0,0,0,0.6);
+  font: 500 13px Fredoka, sans-serif;
+}
+.es-help-card h3 {
+  margin: 0 0 14px;
+  font: 800 16px Fredoka, sans-serif;
+  color: var(--es-accent);
+}
+.es-help-card .es-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px dashed var(--es-border);
+}
+.es-help-card .es-row:last-child { border-bottom: none; }
+.es-help-card kbd {
+  font: 700 11px ui-monospace, Menlo, Consolas, monospace;
+  background: var(--es-bg-soft);
+  color: var(--es-text);
+  padding: 3px 8px;
+  border-radius: 5px;
+  border: 1px solid var(--es-border-strong);
+}
+.es-help-card .es-help-hint {
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--es-hint);
+  text-align: center;
+}
