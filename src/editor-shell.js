@@ -18,7 +18,8 @@
     { page: 'level',    label: 'Level',    icon: '🌱', href: './editor.html' },
     { page: 'courses',  label: 'Courses',  icon: '🌍', href: './course-editor.html' },
     { page: 'ui',       label: 'UI',       icon: '🔘', href: './ui-editor.html' },
-    { page: 'assets',   label: 'Asset Metadata', icon: '📐', href: './asset-editor.html' },
+    // 'assets' tab removed: asset-editor.html is now a redirect shim into the
+    // Level Editor's "Asset Properties" panel (commits 80a13f3, 969f732).
     { page: 'library',  label: 'Library',  icon: '🎨', href: './assets-library.html' }
   ];
 
