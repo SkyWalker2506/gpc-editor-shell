@@ -19,7 +19,7 @@
     { page: 'courses',  label: 'Courses',  icon: '🌍', href: './course-editor.html' },
     { page: 'ui',       label: 'UI',       icon: '🔘', href: './ui-editor.html' },
     { page: 'assets',   label: 'Assets',   icon: '📦', href: './asset-editor.html' },
-    { page: 'balls',    label: 'Balls',    icon: '🎱', href: './ball-editor.html' },
+    { page: 'balls',    label: 'Balls',    icon: '🎱', href: './asset-editor.html?asset=ball&tab=variants' },
     { page: 'library',  label: 'Library',  icon: '🎨', href: './assets-library.html' }
   ];
 
