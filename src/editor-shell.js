@@ -31,7 +31,8 @@
     { key: 'onReset',   label: 'Reset',      legacy: 'btn-reset',        klass: 'es-btn es-danger' },
     { key: 'onSave',    label: '💾 Save',    legacy: 'btn-save',         klass: 'es-btn es-success' },
     { key: 'onPublish', label: '▶ Publish',  legacy: 'btn-publish',      klass: 'es-btn es-primary' },
-    { key: 'onPlay',    label: '▶ Play',     legacy: 'btn-play-game',    klass: 'es-btn es-primary' }
+    { key: 'onPlay',    label: '▶ Play',     legacy: 'btn-play-game',    klass: 'es-btn es-primary' },
+    { key: 'onPlayLive',label: '🎮 Live',    legacy: null,               klass: 'es-btn es-success', title: 'Open game with live edit sync (changes apply instantly)' }
   ];
 
   var state = {
@@ -124,9 +125,9 @@
       // still attach. We forward clicks through to them when no explicit
       // callback is supplied.
       var legacyId = def.legacy;
-      var b = el('button', {
-        class: def.klass, type: 'button', 'data-shell-action': def.key
-      });
+      var battrs = { class: def.klass, type: 'button', 'data-shell-action': def.key };
+      if (def.title) battrs.title = def.title;
+      var b = el('button', battrs);
       b.textContent = def.label;
       b.addEventListener('click', function (ev) {
         if (typeof state.actions[def.key] === 'function') {
