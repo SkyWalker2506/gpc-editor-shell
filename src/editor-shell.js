@@ -293,8 +293,18 @@
   }
 
   // ---------- beforeunload guard ----------
+  // Only fire when we're on an actual editor page AND there are unsaved
+  // changes. Previously the listener was global and could leak across SPAs
+  // / cached sessions, prompting "Leave site?" on the game page itself.
+  function _isEditorPage() {
+    try {
+      var p = String(location.pathname || '').toLowerCase();
+      return /(ui-editor|course-editor|level-editor|asset-editor|editor)\.html$/.test(p);
+    } catch (_) { return false; }
+  }
   function onBeforeUnload(e) {
     if (!state.dirty) return;
+    if (!_isEditorPage()) return;
     e.preventDefault();
     e.returnValue = 'You have unsaved changes. Leave anyway?';
     return e.returnValue;
