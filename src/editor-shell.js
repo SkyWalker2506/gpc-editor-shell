@@ -16,6 +16,10 @@
 
   var DEFAULT_TABS = [
     { page: 'level',    label: 'Level',    icon: '🌱', href: './editor.html' },
+    // Physics is the same Level Editor surface, deep-linked to the Colliders
+    // panel (per-obstacle type=Solid/Trigger + Action). Implemented as a
+    // hash anchor consumed by editor-plugin.js on load.
+    { page: 'physics',  label: 'Physics',  icon: '⚙️', href: './editor.html?focus=physics' },
     { page: 'courses',  label: 'Courses',  icon: '🌍', href: './course-editor.html' },
     { page: 'ui',       label: 'UI',       icon: '🔘', href: './ui-editor.html' },
     // 'assets' tab removed: asset-editor.html is now a redirect shim into the
