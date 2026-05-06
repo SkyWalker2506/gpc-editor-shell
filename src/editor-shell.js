@@ -16,7 +16,6 @@
 
   var DEFAULT_TABS = [
     { page: 'level',    label: 'Level',    icon: '🌱', href: './editor.html' },
-    { page: 'physics',  label: 'Physics',  icon: '⚙️', href: './physics-editor.html' },
     { page: 'courses',  label: 'Courses',  icon: '🌍', href: './course-editor.html' },
     { page: 'ui',       label: 'UI',       icon: '🔘', href: './ui-editor.html' },
     // 'assets' tab removed: asset-editor.html is now a redirect shim into the
