@@ -309,6 +309,10 @@
   function onBeforeUnload(e) {
     if (!state.dirty) return;
     if (!_isEditorPage()) return;
+    // Allow ?_disableUnloadGuard=1 for automated testing (Playwright etc.)
+    try {
+      if (new URLSearchParams(location.search).get('_disableUnloadGuard') === '1') return;
+    } catch (_) {}
     e.preventDefault();
     e.returnValue = 'You have unsaved changes. Leave anyway?';
     return e.returnValue;
